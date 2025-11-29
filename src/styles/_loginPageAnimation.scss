@@ -1,0 +1,74 @@
+$anim-duration: 0.5s;
+$anim-ease: ease-in-out;
+
+.login-page {
+  .orange-box.switch {
+    animation: switchPage $anim-duration $anim-ease forwards;
+
+    .orange-box_img {
+      height: 500px;
+    }
+  } .orange-box.unswitch {
+    animation: unSwitchPage $anim-duration $anim-ease forwards;
+  }
+
+  .login-box.switch {
+    margin: 0 10rem;
+    animation: switchPage00 $anim-duration $anim-ease forwards;
+  } .login-box.unswitch {
+    margin: 0 10rem 0 5rem;
+    animation: unSwitchPage00 $anim-duration $anim-ease forwards;
+  }
+}
+
+@keyframes switchPage {
+  0% {
+    position: absolute;
+    top: 0;
+    left: 0;
+  } 100% {
+    position: absolute;
+    top: 0;
+    left: 50vw;
+  }
+}
+
+@keyframes unSwitchPage {
+  0% {
+    position: absolute;
+    top: 0;
+    left: 50vw;
+  } 100% {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@keyframes switchPage00 {
+  0% {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    right: 0;
+  } 100% {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 50vw;
+  }
+}
+
+@keyframes unSwitchPage00 {
+  0% {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 50vw;
+  } 100% {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    right: 0;
+  }
+}
