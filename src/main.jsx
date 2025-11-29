@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import {  BrowserRouter as Router } from 'react-router-dom'
+import {  HashRouter as Router } from 'react-router-dom'
 import './styles/main.scss'
 import App from './App.jsx'
 import { CheckLoginProvider } from './context/LoginContext.jsx'
