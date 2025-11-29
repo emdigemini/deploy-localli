@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function RegisterAccount({ setToggleRegister, role }){
   const [ applyPremium, setApplyPremium ] = useState(false);
@@ -6,7 +6,7 @@ export function RegisterAccount({ setToggleRegister, role }){
   return (
     <div className="register-overlay">
       <div className="register_modal-card">
-        <i onClick={() => setToggleRegister(false)} class="bi bi-x"></i>
+        <i onClick={() => setToggleRegister(false)} className="bi bi-x"></i>
         <p className="kapit-bahay">Kapit <span>Bahay</span></p>
         {applyPremium 
         ? <PremiumAccount role={role} setApplyPremium={setApplyPremium} /> 
@@ -88,7 +88,9 @@ function PremiumAccount({ role, setApplyPremium }) {
   const [form, setForm] = useState({
     studentType: "",
     schoolName: "",
+    course: "",
     strand: "",
+    gradeLevel: "",
     subjects: "",
     learningMode: "",
     allowance: "",
@@ -103,10 +105,125 @@ function PremiumAccount({ role, setApplyPremium }) {
   });
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
+  const [studentTypeSelect, setStudentTypeSelect] = useState(false);
+  const [courseSelect, setCourseSelect] = useState(false);
+  const [strandSelect, setStrandSelect] = useState(false);
+  const [gradeSelect, setGradeSelect] = useState(false);
+
+  const studentTypeLabel = (value) => {
+    switch(value){
+      case "college": return "College";
+      case "senior-high": return "Senior High";
+      case "high-school": return "High School";
+      case "elementary": return "Elementary **(Parent Account)**";
+      default: return "";
+    }
+  };
+
+  const courseLabel = (value) => {
+    switch(value){
+      case "bsa": return "BS Accountancy (BSA)";
+      case "bsba": return "BS Business Administration (BSBA)";
+      case "bse": return "BS Entrepreneurship (BSE)";
+      case "bsfm": return "BS Financial Management (BSFM)";
+      case "bsit": return "BS Information Technology (BSIT)";
+      case "bscs": return "BS Computer Science (BSCS)";
+      case "bsis": return "BS Information Systems (BSIS)";
+      case "bsed-math": return "BSEd Major in Math (BSED-MATH)";
+      case "bsed-eng": return "BSEd Major in English (BSED-ENG)";
+      case "bsed-sci": return "BSEd Major in Science (BSED-SCI)";
+      case "bsed-filipino": return "BSEd Major in Filipino (BSED-FIL)";
+      case "bsed-social": return "BSEd Major in Social Studies (BSED-SOC)";
+      case "bapsych": return "BS Psychology (BSPSYCH)";
+      case "ba-english": return "BA English (BA-ENG)";
+      case "ba-filipino": return "BA Filipino (BA-FIL)";
+      case "ba-communication": return "BA Communication (BA-COMM)";
+      case "ba-history": return "BA History (BA-HISTORY)";
+      case "ba-economics": return "BA Economics (BA-ECO)";
+      case "bshm": return "BS Hospitality Management (BSHM)";
+      case "bsn": return "BS Nursing (BSHN)";
+
+      default: return "Select Course";
+    }
+  }
+
+  const strandLabel = (value) => {
+    switch(value){
+      case "stem": return "STEM (Academic)";
+      case "abm": return "ABM (Academic)";
+      case "humss": return "HUMSS (Academic)";
+      case "h-e": return "HE (TVL)";
+      case "ict": return "ICT (TVL)";
+      case "i-a": return "IA (TVL)";
+      case "afa": return "AFA (TVL)";
+      default: return "Select Strand";
+    }
+  };
+
+  const gradeLabel = (value) => {
+    switch(value) {
+      case "g10": return "Grade 10 (High School)";
+      case "g9": return "Grade 9 (High School)";
+      case "g8": return "Grade 8 (High School)";
+      case "g7": return "Grade 7 (High School)";
+      case "g6": return "Grade 6 (Elementary)";
+      case "g5": return "Grade 5 (Elementary)";
+      case "g4": return "Grade 4 (Elementary)";
+      case "g3": return "Grade 3 (Elementary)";
+      case "g2": return "Grade 2 (Elementary)";
+      case "g1": return "Grade 1 (Elementary)";
+      default: return "Select Grade Level";
+    }
+  };
+
+
+  function chooseStudentType(value) {
+    updateField("studentType", value);
+    setStudentTypeSelect(false);
+  }
+
+  function chooseCourse(value){
+    updateField("course", value);
+    setCourseSelect(false);
+  }
+
+  function chooseStrand(value){
+    updateField("strand", value);
+    setStrandSelect(false);
+  }
+
+  function chooseLevel(value){
+    updateField("strand", value);
+    setGradeSelect(false);
+  }
 
   function updateField(key, value) {
     setForm({ ...form, [key]: value });
   }
+
+  const collegeProps = {
+    form,
+    courseLabel,
+    courseSelect,
+    chooseCourse,
+    setCourseSelect
+  };
+
+  const seniorHighProps = {
+    form,
+    strandLabel,
+    strandSelect,
+    chooseStrand,
+    setStrandSelect
+  };
+
+  const gradeLevelProps = {
+    form,
+    gradeLabel,
+    gradeSelect,
+    chooseLevel,
+    setGradeSelect
+  };
 
   return (
     <>
@@ -114,15 +231,28 @@ function PremiumAccount({ role, setApplyPremium }) {
         <h2>Register Your Premium Account</h2>
 
         <div className="column-grid">
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.studentType}
-              onChange={(e) => updateField("studentType", e.target.value)}
-              required
-            />
-            <label>Type of students</label>
+          <div className="input-group custom-select-group">
+            <div
+              className="custom-select-display"
+              onClick={() => setStudentTypeSelect(!studentTypeSelect)}
+            >
+              {form.studentType
+                ? studentTypeLabel(form.studentType)
+                : "Select Student Type"}
+
+              <i className={`bi bi-chevron-${studentTypeSelect ? "up" : "down"}`}></i>
+            </div>
+
+            {studentTypeSelect && (
+              <ul className="custom-select-options">
+                <li onClick={() => chooseStudentType("college")}>College</li>
+                <li onClick={() => chooseStudentType("senior-high")}>Senior High</li>
+                <li onClick={() => chooseStudentType("high-school")}>High School</li>
+                <li onClick={() => chooseStudentType("elementary")}>
+                  Elementary **(Parent Account)**
+                </li>
+              </ul>
+            )}
           </div>
 
           <div className="input-group">
@@ -136,17 +266,17 @@ function PremiumAccount({ role, setApplyPremium }) {
             <label>School name</label>
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.strand}
-              onChange={(e) => updateField("strand", e.target.value)}
-              required
-            />
-            <label>Strand/Course</label>
-          </div>
+          {form.studentType === "college" 
+          ? <SelectCourse {...collegeProps} />
+          : form.studentType === "senior-high"
+          ? <SelectStrand {...seniorHighProps} />
+          : form.studentType === "high-school"
+          ? <SelectHighSchoolLevel {...gradeLevelProps} />
+          : form.studentType === "elementary"
+          ? <SelectElementaryLevel {...gradeLevelProps} />
+          : null}
 
+          
           <div className="input-group">
             <input
               type="text"
@@ -299,6 +429,132 @@ function PremiumAccount({ role, setApplyPremium }) {
   );
 }
 
+function SelectCourse({ form, courseLabel, courseSelect, chooseCourse, setCourseSelect }){
+  const allCourses = [
+    { value: "bsa", label: "BS Accountancy (BSA)" },
+    { value: "bsba", label: "BS Business Administration (BSBA)" },
+    { value: "bse", label: "BS Entrepreneurship (BSE)" },
+    { value: "bsfm", label: "BS Financial Management (BSFM)" },
+    { value: "bsit", label: "BS Information Technology (BSIT)" },
+    { value: "bscs", label: "BS Computer Science (BSCS)" },
+    { value: "bsis", label: "BS Information System (BSIS)" },
+    { value: "bshm", label: "BS Hospitality Management (BSHM)" },
+    { value: "bsn", label: "BS Nursing (BSN)" },
+    { value: "bsed-math", label: "BSEd Major in Math (BSED-MATH)" },
+    { value: "bsed-eng", label: "BSEd Major in English (BSED-ENG)" },
+    { value: "bspsych", label: "BS Psychology (BSPSYCH)" },
+    { value: "bsbio", label: "BS Biology (BSBIO)" },
+    { value: "bschem", label: "BS Chemistry (BSCHEM)" },
+  ];
+
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setCourseSelect(!courseSelect)}
+      >
+        {form.strand
+          ? courseLabel(form.course)
+          : "Select Course"}
+
+        <i className={`bi bi-chevron-${courseSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {courseSelect && (
+        <ul className="custom-select-options">
+          {allCourses.map((c) => (
+            <li key={c.value} onClick={() => chooseCourse(c.value)}>
+              {c.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function SelectStrand({ form, strandLabel, strandSelect, chooseStrand, setStrandSelect }){
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setStrandSelect(!strandSelect)}
+      >
+        {form.strand
+          ? strandLabel(form.strand)
+          : "Select Strand"}
+
+        <i className={`bi bi-chevron-${strandSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {strandSelect && (
+        <ul className="custom-select-options">
+          <li onClick={() => chooseStrand("stem")}>STEM (Academic)</li>
+          <li onClick={() => chooseStrand("abm")}>ABM (Academic)</li>
+          <li onClick={() => chooseStrand("humss")}>HUMSS (Academic)</li>
+          <li onClick={() => chooseStrand("h-e")}>HE (TVL)</li>
+          <li onClick={() => chooseStrand("ict")}>ICT (TVL)</li>
+          <li onClick={() => chooseStrand("i-a")}>IA (TVL)</li>
+          <li onClick={() => chooseStrand("afa")}>AFA (TVL)</li>
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function SelectHighSchoolLevel({ form, gradeLabel, gradeSelect, chooseLevel, setGradeSelect }){
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setGradeSelect(!gradeSelect)}
+      >
+        {form.strand
+          ? gradeLabel(form.strand)
+          : "Select Grade Level"}
+
+        <i className={`bi bi-chevron-${gradeSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {gradeSelect && (
+        <ul className="custom-select-options">
+          <li onClick={() => chooseLevel("g10")}>Grade 10 (High School)</li>
+          <li onClick={() => chooseLevel("g9")}>Grade 9 (High School)</li>
+          <li onClick={() => chooseLevel("g8")}>Grade 8 (High School)</li>
+          <li onClick={() => chooseLevel("g7")}>Grade 7 (High School)</li>
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function SelectElementaryLevel({ form, gradeLabel, gradeSelect, chooseLevel, setGradeSelect }){
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setGradeSelect(!gradeSelect)}
+      >
+        {form.strand
+          ? gradeLabel(form.strand)
+          : "Select Grade Level"}
+
+        <i className={`bi bi-chevron-${gradeSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {gradeSelect && (
+        <ul className="custom-select-options">
+          <li onClick={() => chooseLevel("g6")}>Grade 6 (Elementary)</li>
+          <li onClick={() => chooseLevel("g5")}>Grade 5 (Elementary)</li>
+          <li onClick={() => chooseLevel("g4")}>Grade 4 (Elementary)</li>
+          <li onClick={() => chooseLevel("g3")}>Grade 3 (Elementary)</li>
+          <li onClick={() => chooseLevel("g2")}>Grade 2 (Elementary)</li>
+          <li onClick={() => chooseLevel("g1")}>Grade 1 (Elementary)</li>
+        </ul>
+      )}
+    </div>
+  )
+}
 
 function ApplicationReviewPopup(){
   return (

@@ -35,7 +35,7 @@ function App() {
                 {!isLogin 
                 ? <Route path='/' element={<LoginPage />} />
                 : <Route path='/*' element={<Header />}>
-                    <Route path='/' element={<HomePage />} />
+                    <Route path='' element={<HomePage />} />
                     <Route path='community' element={<CommunityPage />} />
                     <Route path="messages" element={<MessagePage />} />
                     <Route path="profile" element={<ProfilePage />} />

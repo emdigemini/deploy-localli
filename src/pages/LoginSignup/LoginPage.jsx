@@ -1,5 +1,5 @@
 import AOS from "aos";
-import { useState, useEffect, useRef, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { CheckLogin } from "../../context/LoginContext";
 import { RegisterAccount } from "../../components/Register/RegisterAccount";
 
@@ -63,7 +63,7 @@ function OrangeBox_Students(){
       <div className="orange-box_img"
         data-aos="zoom-in-up"
       >
-        <img src="/image/6611984.png" draggable="false" />
+        <img className="find-tutor" src="public/image/6611984.png" draggable="false" />
       </div>
     </>
   )
@@ -81,7 +81,7 @@ function OrangeBox_Tutors(){
       <div className="orange-box_img"
         data-aos="zoom-in-up"
       >
-        <img src="/image/4600945.png" draggable="false" />
+        <img src="public/image/4600945.png" draggable="false" />
       </div>
     </>
   )

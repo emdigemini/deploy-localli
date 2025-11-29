@@ -1,16 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import {  HashRouter as Router } from 'react-router-dom'
+import {  HashRouter } from 'react-router-dom'
 import './styles/main.scss'
 import App from './App.jsx'
 import { CheckLoginProvider } from './context/LoginContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Router>
+    <HashRouter>
       <CheckLoginProvider>
         <App />
       </CheckLoginProvider>
-    </Router>
+    </HashRouter>
   </StrictMode>,
 )

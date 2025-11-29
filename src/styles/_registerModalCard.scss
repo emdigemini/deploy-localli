@@ -81,6 +81,17 @@ $primary-blue: #007bff;
           box-shadow: 0 0 6px rgba(0, 123, 255, 0.2);
         }
 
+        select {
+          height: 100%;
+          width: 100%;
+          font-size: 15px;
+          border: none;
+          cursor: pointer;
+          &:focus {
+            outline: none;
+          } 
+        }
+
         input {
           width: 100%;
           font-size: 15px;
@@ -205,6 +216,65 @@ $primary-blue: #007bff;
     }
   }
 }
+
+.custom-select-group {
+  position: relative;
+
+  .custom-select-display {
+    width: 100%;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i {
+      font-size: 18px;
+      color: #666;
+    }
+  }
+
+  .custom-select-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    max-height: 400px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 2000;
+    animation: fadeSlide 0.15s ease;
+    overflow-y: scroll;
+
+    li {
+      padding: 12px 14px;
+      font-size: 15px;
+      cursor: pointer;
+      color: #333;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(0, 123, 255, 0.08); 
+      }
+    }
+  }
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .alert-popup {
   position: absolute;
