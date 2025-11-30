@@ -46,9 +46,10 @@
 
     .orange-box_img {
       height: 700px;
-
+      width: 750px; 
       & img {
         height: 100%;
+        width: 100%;
         transition: 0.4s ease-in;
       }
     }

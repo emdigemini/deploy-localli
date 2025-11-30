@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 export function RegisterAccount({ setToggleRegister, role }){
-  const [ applyPremium, setApplyPremium ] = useState(false);
+  const [ applyPremium, setApplyPremium ] = useState( );
 
   return (
     <div className="register-overlay">
@@ -18,6 +18,7 @@ export function RegisterAccount({ setToggleRegister, role }){
 
 function FreeAccount({ role, setApplyPremium }){
   const [ form, setForm ] = useState({
+    role,
     email: "", name: "",
     password: "", confirmPassword: ""
   })
@@ -85,6 +86,18 @@ function FreeAccount({ role, setApplyPremium }){
 }
 
 function PremiumAccount({ role, setApplyPremium }) {
+
+  return (
+    <>
+      {role === 'student' 
+        ? <ForStudent setApplyPremium={setApplyPremium} />
+        : <ForTutor setApplyPremium={setApplyPremium} />
+      }
+    </>
+  );
+}
+
+function ForStudent({ setApplyPremium }){
   const [form, setForm] = useState({
     studentType: "",
     schoolName: "",
@@ -98,6 +111,8 @@ function PremiumAccount({ role, setApplyPremium }) {
     guardian: "",
     firstName: "",
     lastName: "",
+    gender: "",
+    age: "",
     email: "",
     username: "",
     password: "",
@@ -109,14 +124,17 @@ function PremiumAccount({ role, setApplyPremium }) {
   const [courseSelect, setCourseSelect] = useState(false);
   const [strandSelect, setStrandSelect] = useState(false);
   const [gradeSelect, setGradeSelect] = useState(false);
+  const [modeSelect, setModeSelect] = useState(false);
+  const [genderSelect, setGenderSelect] = useState(false);
 
   const studentTypeLabel = (value) => {
     switch(value){
+      case "self-study": return "Self Study";
       case "college": return "College";
       case "senior-high": return "Senior High";
       case "high-school": return "High School";
       case "elementary": return "Elementary **(Parent Account)**";
-      default: return "";
+      default: return "Select Student Type";
     }
   };
 
@@ -176,6 +194,23 @@ function PremiumAccount({ role, setApplyPremium }) {
     }
   };
 
+  const modeLabel = (value) => {
+    switch(value){
+      case "online": return "Online";
+      case "f2f": return "Face to Face";
+      case "hybrid": return "Hybrid";
+      default: return "Select Learning/Teaching Mode";
+    }
+  }
+
+  const genderLabel = (value) => {
+    switch(value){
+      case "male": return "Male";
+      case "female": return "Female";
+      case "n/a": return "Preferred not to say";
+      default: return "Select Gender";
+    }
+  }
 
   function chooseStudentType(value) {
     updateField("studentType", value);
@@ -195,6 +230,16 @@ function PremiumAccount({ role, setApplyPremium }) {
   function chooseLevel(value){
     updateField("strand", value);
     setGradeSelect(false);
+  }
+
+  function chooseMode(value){
+    updateField("learningMode", value);
+    setModeSelect(false);
+  }
+
+  function chooseGender(value){
+    updateField("gender", value);
+    setGenderSelect(false);
   }
 
   function updateField(key, value) {
@@ -225,6 +270,22 @@ function PremiumAccount({ role, setApplyPremium }) {
     setGradeSelect
   };
 
+  const learningModeProps = {
+    form, 
+    modeLabel, 
+    modeSelect, 
+    chooseMode, 
+    setModeSelect 
+  };
+
+  const genderProps = {
+    form, 
+    genderLabel, 
+    genderSelect, 
+    chooseGender, 
+    setGenderSelect 
+  }
+
   return (
     <>
       <form className="premium-form">
@@ -245,6 +306,7 @@ function PremiumAccount({ role, setApplyPremium }) {
 
             {studentTypeSelect && (
               <ul className="custom-select-options">
+                <li onClick={() => chooseStudentType("self-study")}>Self Study</li>
                 <li onClick={() => chooseStudentType("college")}>College</li>
                 <li onClick={() => chooseStudentType("senior-high")}>Senior High</li>
                 <li onClick={() => chooseStudentType("high-school")}>High School</li>
@@ -255,16 +317,21 @@ function PremiumAccount({ role, setApplyPremium }) {
             )}
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.schoolName}
-              onChange={(e) => updateField("schoolName", e.target.value)}
-              required
-            />
-            <label>School name</label>
-          </div>
+          {form.studentType === ""
+          ? null
+          : form.studentType === "self-study"
+          ? null
+          :<div className="input-group">
+              <input
+                type="text"
+                placeholder=" "
+                value={form.schoolName}
+                onChange={(e) => updateField("schoolName", e.target.value)}
+                required
+              />
+              <label>School name</label>
+            </div>
+          }
 
           {form.studentType === "college" 
           ? <SelectCourse {...collegeProps} />
@@ -288,16 +355,7 @@ function PremiumAccount({ role, setApplyPremium }) {
             <label>Subjects you wanna learn</label>
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.learningMode}
-              onChange={(e) => updateField("learningMode", e.target.value)}
-              required
-            />
-            <label>Learning mode/Tutoring mode</label>
-          </div>
+          <LearningMode {...learningModeProps} />
 
           <div className="input-group">
             <input
@@ -307,7 +365,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("allowance", e.target.value)}
               required
             />
-            <label>Monthly Allowance</label>
+            <label>Monthly allowance</label>
           </div>
 
           <div className="input-group">
@@ -318,7 +376,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("contact", e.target.value)}
               required
             />
-            <label>Contact Number</label>
+            <label>Contact number</label>
           </div>
 
           <div className="input-group">
@@ -328,7 +386,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               value={form.guardian}
               onChange={(e) => updateField("guardian", e.target.value)}
             />
-            <label>Guardian Contact (Optional)</label>
+            <label>Guardian contact (Optional)</label>
           </div>
 
           <div className="input-group">
@@ -339,7 +397,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("firstName", e.target.value)}
               required
             />
-            <label>First Name</label>
+            <label>First name</label>
           </div>
 
           <div className="input-group">
@@ -350,7 +408,20 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("lastName", e.target.value)}
               required
             />
-            <label>Last Name</label>
+            <label>Last name</label>
+          </div>
+
+          <SelectGender {...genderProps} />
+
+          <div className="input-group">
+            <input
+              type="number"
+              placeholder=" "
+              value={form.age}
+              onChange={(e) => updateField("age", e.target.value)}
+              required
+            />
+            <label>Age</label>
           </div>
 
           <div className="input-group">
@@ -372,7 +443,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("username", e.target.value)}
               required
             />
-            <label>Username</label>
+            <label>Create username</label>
           </div>
 
           <div className="input-group">
@@ -383,7 +454,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("password", e.target.value)}
               required
             />
-            <label>Create Password</label>
+            <label>Create password</label>
             {form.password.length > 0 && (
               <>
                 <div onClick={() => setShowPassword(!showPassword)} className="toggle-show2">
@@ -401,7 +472,7 @@ function PremiumAccount({ role, setApplyPremium }) {
               onChange={(e) => updateField("confirmPassword", e.target.value)}
               required
             />
-            <label>Confirm Password</label>
+            <label>Confirm password</label>
             {form.confirmPassword.length > 0 && (
               <>
                 <div onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="toggle-show2">
@@ -418,15 +489,13 @@ function PremiumAccount({ role, setApplyPremium }) {
       <div className="switch-premium">
         <p>Stay to Free <br />
           <span>
-            {role === 'student' 
-              ? "Find tutors, send messages, and start browsing for free."
-              : "Find students, send messages, and start teaching for free."}
+            Find tutors, send messages, and start browsing for free.
           </span>
         </p>
         <a onClick={() => setApplyPremium(false)}>Apply for Free Account</a>
       </div>
     </>
-  );
+  )
 }
 
 function SelectCourse({ form, courseLabel, courseSelect, chooseCourse, setCourseSelect }){
@@ -553,6 +622,322 @@ function SelectElementaryLevel({ form, gradeLabel, gradeSelect, chooseLevel, set
         </ul>
       )}
     </div>
+  )
+}
+
+function LearningMode({ form, modeLabel, modeSelect, chooseMode, setModeSelect }){
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setModeSelect(!modeSelect)}
+      >
+        {form.learningMode
+          ? modeLabel(form.learningMode)
+          : "Select Learning/Teaching Mode"}
+
+        <i className={`bi bi-chevron-${modeSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {modeSelect && (
+        <ul className="custom-select-options">
+          <li onClick={() => chooseMode("online")}>Online</li>
+          <li onClick={() => chooseMode("f2f")}>Face to Face</li>
+          <li onClick={() => chooseMode("hybrid")}>Hybrid</li>
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function SelectGender({ form, genderLabel, genderSelect, chooseGender, setGenderSelect }){
+  return (
+    <div className="input-group custom-select-group">
+      <div
+        className="custom-select-display"
+        onClick={() => setGenderSelect(!genderSelect)}
+      >
+        {form.gender
+          ? genderLabel(form.gender)
+          : "Select Gender"}
+
+        <i className={`bi bi-chevron-${genderSelect ? "up" : "down"}`}></i>
+      </div>
+
+      {genderSelect && (
+        <ul className="custom-select-options">
+          <li onClick={() => chooseGender("male")}>Male</li>
+          <li onClick={() => chooseGender("female")}>Female</li>
+          <li onClick={() => chooseGender("n/a")}>Preferred not to say</li>
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function ForTutor({ setApplyPremium }){
+  const [form, setForm] = useState({
+    studentType: "",
+    schoolName: "",
+    course: "",
+    strand: "",
+    gradeLevel: "",
+    subjects: "",
+    learningMode: "",
+    allowance: "",
+    contact: "",
+    guardian: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    age: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const [ showPassword, setShowPassword ] = useState(false);
+  const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
+  const [studentTypeSelect, setStudentTypeSelect] = useState(false);
+  const [modeSelect, setModeSelect] = useState(false);
+  const [genderSelect, setGenderSelect] = useState(false);
+
+  const studentTypeLabel = (value) => {
+    switch(value){
+      case "self-study": return "Self Study";
+      case "college": return "College";
+      case "senior-high": return "Senior High";
+      case "high-school": return "High School";
+      case "elementary": return "Elementary";
+      case "anyone": return "Anyone";
+      default: return "Preferred Student";
+    }
+  };
+
+  const modeLabel = (value) => {
+    switch(value){
+      case "online": return "Online";
+      case "f2f": return "Face to Face";
+      case "hybrid": return "Hybrid";
+    }
+  }
+
+  const genderLabel = (value) => {
+    switch(value){
+      case "male": return "Male";
+      case "female": return "Female";
+      case "n/a": return "Preferred not to say";
+      default: return "Select Gender";
+    }
+  }
+
+  function chooseStudentType(value) {
+    updateField("studentType", value);
+    setStudentTypeSelect(false);
+  }
+
+  function chooseMode(value){
+    updateField("learningMode", value);
+    setModeSelect(false);
+  }
+
+  function chooseGender(value){
+    updateField("gender", value);
+    setGenderSelect(false);
+  }
+
+  function updateField(key, value) {
+    setForm({ ...form, [key]: value });
+  }
+
+  const learningModeProps = {
+    form, 
+    modeLabel, 
+    modeSelect, 
+    chooseMode, 
+    setModeSelect 
+  };
+
+  const genderProps = {
+    form, 
+    genderLabel, 
+    genderSelect, 
+    chooseGender, 
+    setGenderSelect 
+  }
+
+  return (
+    <>
+      <form className="premium-form">
+        <h2>Register Your Premium Account</h2>
+
+        <div className="column-grid">
+          <div className="input-group custom-select-group">
+            <div
+              className="custom-select-display"
+              onClick={() => setStudentTypeSelect(!studentTypeSelect)}
+            >
+              {form.studentType
+                ? studentTypeLabel(form.studentType)
+                : "Preferred Student"}
+
+              <i className={`bi bi-chevron-${studentTypeSelect ? "up" : "down"}`}></i>
+            </div>
+
+            {studentTypeSelect && (
+              <ul className="custom-select-options">
+                <li onClick={() => chooseStudentType("self-study")}>Self Study</li>
+                <li onClick={() => chooseStudentType("college")}>College</li>
+                <li onClick={() => chooseStudentType("senior-high")}>Senior High</li>
+                <li onClick={() => chooseStudentType("high-school")}>High School</li>
+                <li onClick={() => chooseStudentType("elementary")}>Elementary</li>
+                <li onClick={() => chooseStudentType("anyone")}>Anyone</li>
+              </ul>
+            )}
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder=" "
+              value={form.subjects}
+              onChange={(e) => updateField("subjects", e.target.value)}
+              required
+            />
+            <label>Subjects you wanna teach</label>
+          </div>
+
+          <LearningMode {...learningModeProps} />
+
+          <div className="input-group">
+            <input
+              type="number"
+              placeholder=" "
+              value={form.allowance}
+              onChange={(e) => updateField("allowance", e.target.value)}
+              required
+            />
+            <label>Preferred rate</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="tel"
+              placeholder=" "
+              value={form.contact}
+              onChange={(e) => updateField("contact", e.target.value)}
+              required
+            />
+            <label>Contact number</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder=" "
+              value={form.firstName}
+              onChange={(e) => updateField("firstName", e.target.value)}
+              required
+            />
+            <label>First name</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder=" "
+              value={form.lastName}
+              onChange={(e) => updateField("lastName", e.target.value)}
+              required
+            />
+            <label>Last name</label>
+          </div>
+
+          <SelectGender {...genderProps} />
+
+          <div className="input-group">
+            <input
+              type="number"
+              placeholder=" "
+              value={form.age}
+              onChange={(e) => updateField("age", e.target.value)}
+              required
+            />
+            <label>Age</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder=" "
+              value={form.email}
+              onChange={(e) => updateField("email", e.target.value)}
+              required
+            />
+            <label>Email</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder=" "
+              value={form.username}
+              onChange={(e) => updateField("username", e.target.value)}
+              required
+            />
+            <label>Create username</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder=" "
+              value={form.password}
+              onChange={(e) => updateField("password", e.target.value)}
+              required
+            />
+            <label>Create password</label>
+            {form.password.length > 0 && (
+              <>
+                <div onClick={() => setShowPassword(!showPassword)} className="toggle-show2">
+                  <i className={`${showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'}`}></i>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="input-group">
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder=" "
+              value={form.confirmPassword}
+              onChange={(e) => updateField("confirmPassword", e.target.value)}
+              required
+            />
+            <label>Confirm password</label>
+            {form.confirmPassword.length > 0 && (
+              <>
+                <div onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="toggle-show2">
+                  <i className={`${showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'}`}></i>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        <button type="submit">REGISTER ACCOUNT</button>
+      </form>
+
+      <div className="switch-premium">
+        <p>Stay to Free <br />
+          <span>
+            Find students, send messages, and start teaching for free.
+          </span>
+        </p>
+        <a onClick={() => setApplyPremium(false)}>Apply for Free Account</a>
+      </div>
+    </>
   )
 }
 

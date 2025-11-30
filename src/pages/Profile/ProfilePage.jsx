@@ -4,8 +4,8 @@ export function ProfilePage(){
   return (
     <div className="profile-page">
       <div className="graphic-background">
-        <img draggable="false" className="lalake" src="/image/lalake.png" alt="graphic-background" />
-        <img draggable="false" className="babae" src="/image/babae.png" alt="graphic-background" />
+        <img draggable="false" className="lalake" src="image/lalake.png" alt="graphic-background" />
+        <img draggable="false" className="babae" src="image/babae.png" alt="graphic-background" />
 
         <div className="modal-card">
           <div className="modal-card-profile">
