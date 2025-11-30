@@ -45,8 +45,8 @@
     }
 
     .orange-box_img {
-      height: 700px;
-      width: 750px; 
+      max-height: 700px;
+      max-width: 750px; 
       & img {
         height: 100%;
         width: 100%;

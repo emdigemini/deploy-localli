@@ -17,24 +17,66 @@ export function ProfilePage(){
               <VerifiedBadge />
             </div>
             <div className="profile-user-info">
-              <h2>User Name</h2>
-              <p className="job">
-                <Job />
-                Data engineer at Socia PH
-              </p>
-              <p className="school">
-                <Toga />
-                Graduate at UP Diliman
-              </p>
-              <p className="location">
-                <i className="bi bi-geo-alt"></i>
-                Pililla, Calabarzon
-              </p>
+              <i className="bi bi-pencil-square edit"></i>
+              <div className="info-details">
+                <h2>User Name</h2>
+                <p className="job">
+                  <Job />
+                  Data engineer at Socia PH
+                </p>
+                <p className="school">
+                  <Toga />
+                  Graduate at UP Diliman
+                </p>
+                <p className="location">
+                  <i className="bi bi-geo-alt"></i>
+                  Pililla, Calabarzon
+                </p>
+              </div>
+              <div className="cards">
+                <p>Online</p>
+                <p>Part-time</p>
+                <p>Availability: Evening at 5PM - 10PM</p>
+              </div>
             </div>
           </div>
 
           <div className="modal-card-skills">
-
+            <div className="header">
+              <h2>Skills</h2>
+              <i className="bi bi-pencil-square edit"></i>
+            </div>
+            <div className="subjects">
+              <div className="name">
+                <p>Subjects I Teach</p>
+                <p className="count">5 / 5</p>
+              </div>
+              <div className="cards">
+                <p>Programming / Web Development</p>
+                <p>Video Editing / Graphic Design</p>
+                <p>English</p>
+                <p>Mathematics</p>
+                <p>Career Mentorship</p>
+              </div>
+            </div>
+            <div className="top-skills">
+              <div className="name">
+                <p>Top Skills</p>
+                <p className="count">10 / 10</p>
+              </div>
+              <div className="cards">
+                <p>Programming / Web Development</p>
+                <p>JavaScript</p>
+                <p>React.JS</p>
+                <p>Node.JS</p>
+                <p>Figma</p>
+                <p>MongoDB</p>
+                <p>Time Management</p>
+                <p>Adobe Illustrator</p>
+                <p>Video Editing / Graphic Design</p>
+                <p>Data Analytics</p>
+              </div>
+            </div>
           </div>
 
           <div className="modal-card-posts">
@@ -51,8 +93,8 @@ export function ProfilePage(){
         </div>
       </div>
       <div className="plane-background">
-        <img draggable="false" className="plane-left" src="/image/plane-left.png" alt="plane-background" />
-        <img draggable="false" className="plane-right" src="/image/plane-right.png" alt="plane-background" />
+        <img draggable="false" className="plane-left" src="image/plane-left.png" alt="plane-background" />
+        <img draggable="false" className="plane-right" src="image/plane-right.png" alt="plane-background" />
       </div>
     </div>
   )

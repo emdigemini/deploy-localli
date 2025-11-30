@@ -11,8 +11,6 @@
     justify-content: center;
     height: 100vh;
     width: 100%;
-    border-bottom: 20px solid var(--primary-orange);
-    box-shadow: 0 6px 20px rgba(58, 58, 58, 0.7);
     z-index: 2;
     .lalake {
       position: absolute;
@@ -30,8 +28,7 @@
 
   .plane-background {
     position: relative;
-    background: var(--newsfeed-white);
-    height: 100vh;
+    height: 85vh;
     width: 100%;
 
     .plane-left {
@@ -130,32 +127,123 @@
       }
 
       .profile-user-info {
+        position: relative;
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         gap: 12px;
         margin-top: 70px;
-        margin-left: 40px;
 
-        .school, .location, .job {
-          color: var(--primary-black);
+        .edit {
+          position: absolute;
+          color: #444;
+          font-size: 20px;
+          top: -60px;
+          right: 10px;
+          cursor: pointer;
+          &:hover {
+            color: #000;
+          }
+        }
+
+        .info-details {
           display: flex;
-          align-items: center;
-          gap: 4px;
+          flex-direction: column;
+          gap: 10px;
+          margin-left: 40px;
+
+          .school, .location, .job {
+            color: var(--primary-black);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+          .job {
+            color: #000;
+            font-weight: 600;
+          }
         }
-        .job {
-          color: #000;
-          font-weight: 600;
+
+        .cards {
+          display: flex;
+          height: max-content;
+          gap: 10px;
+          flex-wrap: wrap;
+          width: 300px;
+
+          p {
+            height: max-content;
+            font-size: 15px;
+            background: var(--bg-gray);
+            padding: 4px 12px;
+            border-radius: 50px;
+          }
         }
+
       }
     }
 
     .modal-card-skills {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       height: 400px;
       border-radius: 20px;
+      padding: 20px;
       width: 100%;
       backdrop-filter: blur(20px);
       background: rgba(255, 255, 255, 0.7);
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+
+      .header {
+        position: relative;
+        display: flex;
+        .edit {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          font-size: 20px;
+          color: #444;
+          cursor: pointer;
+          &:hover {
+            color: #000;
+          }
+        }
+      }
+
+      .subjects, .top-skills {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #444;
+
+        .name {
+          display: flex;
+          justify-content: space-between;
+
+          p {
+            font-size: 18px;
+            font-weight: 450;
+          }
+
+          .count {
+            font-size: 13px;
+          }
+        }
+      }
+
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          background: var(--bg-gray);
+          padding: 4px 12px;
+          border-radius: 50px;
+        }
+      }
     }
 
     .modal-card-posts {
@@ -163,7 +251,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
+      height: 85vh;
       padding: 0 20px;
       border-radius: 20px;
       width: 100%;

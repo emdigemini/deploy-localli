@@ -25,12 +25,32 @@ $primary-blue: #007bff;
     min-width: 750px;
     height: max-content;
     background: #fff;
+    backdrop-filter: blur(1px);
     padding: 60px 25px;
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-
+    &::before {
+      content: "";
+      position: absolute;
+      background-image: url("image/plane-right.png");
+      background-repeat: no-repeat;
+      background-position: calc(100% + 200px) calc(100% + 175px);
+      background-size: 400px 300px;
+      inset: 0;
+      z-index: -1;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      background-image: url("image/plane-left.png");
+      background-repeat: no-repeat;
+      background-position: -300px calc(2%);
+      background-size: 450px 100px;
+      inset: 0;
+      z-index: -1;
+    }
 
     i {
       position: absolute;
