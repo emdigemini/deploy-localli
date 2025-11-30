@@ -42,8 +42,12 @@ function FreeAccount({ role, setApplyPremium }){
           <label className={`${form.name.length > 0 ? 'up' : ''}`} htmlFor="name">Name</label>
         </div>
         <div className="input-group">
+          <input onChange={(e) => updateField('email', e.target.value)} id="username" type="name" placeholder=' ' required />
+          <label className={`${form.email.length > 0 ? 'up' : ''}`} htmlFor="email">Create username</label>
+        </div>
+        <div className="input-group">
           <input onChange={(e) => updateField('password', e.target.value)} id="password" type={showPassword ? 'text' : 'password'} placeholder=' ' required />
-            <label className={`${form.password.length > 0 ? 'up' : ''}`} htmlFor="password">Password</label>
+            <label className={`${form.password.length > 0 ? 'up' : ''}`} htmlFor="password">Create password</label>
             {form.password.length > 0 && (
               <>
                 <div onClick={() => setShowPassword(!showPassword)} className="toggle-show">
@@ -54,7 +58,7 @@ function FreeAccount({ role, setApplyPremium }){
         </div>
         <div className="input-group">
           <input onChange={(e) => updateField('confirmPassword', e.target.value)} id="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} placeholder=' ' required />
-            <label className={`${form.confirmPassword.length > 0 ? 'up' : ''}`} htmlFor="confirmPassword">Confirm Password</label>
+            <label className={`${form.confirmPassword.length > 0 ? 'up' : ''}`} htmlFor="confirmPassword">Confirm password</label>
             {form.confirmPassword.length > 0 && (
               <>
                 <div onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="toggle-show2">
@@ -126,6 +130,7 @@ function ForStudent({ setApplyPremium }){
   const [gradeSelect, setGradeSelect] = useState(false);
   const [modeSelect, setModeSelect] = useState(false);
   const [genderSelect, setGenderSelect] = useState(false);
+  const [subjectSelect, setSubjectSelect] = useState(false);
 
   const studentTypeLabel = (value) => {
     switch(value){
@@ -212,6 +217,50 @@ function ForStudent({ setApplyPremium }){
     }
   }
 
+  const subjectLabel = (value) => {
+    switch(value){
+      case "math": return "Mathematics";
+      case "english": return "English";
+      case "filipino": return "Filipino / Tagalog";
+      case "science": return "Science";
+      case "aralingpanlipunan": return "Araling Panlipunan";
+      case "mapeh": return "MAPEH (Music, Arts, PE, Health)";
+      case "technology": return "Technology / ICT";
+      case "webdev": return "Web Development (HTML, CSS, JS)";
+      case "programming": return "Programming (Python, Java, C++, etc.)";
+      case "datascience": return "Data Science / Analytics";
+      case "ai": return "Artificial Intelligence / Machine Learning";
+      case "database": return "Databases / SQL";
+      case "networking": return "Computer Networking / IT Support";
+      case "cybersecurity": return "Cybersecurity / Ethical Hacking";
+      case "cloud": return "Cloud Computing (AWS, Azure, GCP)";
+      case "devops": return "DevOps / CI-CD Basics";
+      case "mobiledev": return "Mobile App Development (Android/iOS)";
+      case "robotics": return "Robotics / Automation";
+      case "uiux": return "UI/UX Design";
+      case "excel": return "Microsoft Excel / Google Sheets";
+      case "arts": return "Arts / Drawing / Painting";
+      case "music": return "Music / Instrument Lessons";
+      case "editing": return "Video Editing / Graphic Design";
+      case "communication": return "Communication / Public Speaking";
+      case "mentorship": return "Career Mentorship";
+      case "problemsolving": return "Problem Solving";
+      case "leadership": return "Leadership Skills";
+      case "studyhabits": return "Study Skills / Time Management";
+      case "financialliteracy": return "Financial Literacy / Budgeting";
+      case "entrepreneurship": return "Entrepreneurship / Business Skills";
+      case "digitalmarketing": return "Digital Marketing / Social Media Management";
+      case "softskills": return "Soft Skills / Workplace Readiness";
+      case "interviewprep": return "Job Interview Preparation";
+      case "resume": return "Resume / Portfolio Building";
+      case "matholympiad": return "Math Olympiad / Competitions";
+      case "scienceolympiad": return "Science Olympiad / Competitions";
+      case "speechcontest": return "Speech / Oratory Contest Prep";
+      case "collegeprep": return "College Entrance Prep (UPCAT, ACET, etc.)";
+      default: return "Select Subject";
+    }
+  }
+
   function chooseStudentType(value) {
     updateField("studentType", value);
     setStudentTypeSelect(false);
@@ -240,6 +289,11 @@ function ForStudent({ setApplyPremium }){
   function chooseGender(value){
     updateField("gender", value);
     setGenderSelect(false);
+  }
+
+  function chooseSubject(value){
+    updateField("subjects", value);
+    setSubjectSelect(false);
   }
 
   function updateField(key, value) {
@@ -284,6 +338,11 @@ function ForStudent({ setApplyPremium }){
     genderSelect, 
     chooseGender, 
     setGenderSelect 
+  }
+
+  const subjectProps = {
+    subjectSelect,
+    chooseSubject,
   }
 
   return (
@@ -344,15 +403,18 @@ function ForStudent({ setApplyPremium }){
           : null}
 
           
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.subjects}
-              onChange={(e) => updateField("subjects", e.target.value)}
-              required
-            />
-            <label>Subjects you wanna learn</label>
+          <div className="input-group custom-select-group">
+            <div
+              className="custom-select-display"
+              onClick={() => setSubjectSelect(!subjectSelect)}
+            >
+              {form.subjects
+                ? subjectLabel(form.subjects)
+                : "Select Subject to Learn"}
+
+              <i className={`bi bi-chevron-${subjectSelect ? "up" : "down"}`}></i>
+            </div>
+            <SelectSubject {...subjectProps} />
           </div>
 
           <LearningMode {...learningModeProps} />
@@ -702,6 +764,7 @@ function ForTutor({ setApplyPremium }){
   const [studentTypeSelect, setStudentTypeSelect] = useState(false);
   const [modeSelect, setModeSelect] = useState(false);
   const [genderSelect, setGenderSelect] = useState(false);
+  const [subjectSelect, setSubjectSelect] = useState(false);
 
   const studentTypeLabel = (value) => {
     switch(value){
@@ -732,6 +795,50 @@ function ForTutor({ setApplyPremium }){
     }
   }
 
+  const subjectLabel = (value) => {
+    switch(value){
+      case "math": return "Mathematics";
+      case "english": return "English";
+      case "filipino": return "Filipino / Tagalog";
+      case "science": return "Science";
+      case "aralingpanlipunan": return "Araling Panlipunan";
+      case "mapeh": return "MAPEH (Music, Arts, PE, Health)";
+      case "technology": return "Technology / ICT";
+      case "webdev": return "Web Development (HTML, CSS, JS)";
+      case "programming": return "Programming (Python, Java, C++, etc.)";
+      case "datascience": return "Data Science / Analytics";
+      case "ai": return "Artificial Intelligence / Machine Learning";
+      case "database": return "Databases / SQL";
+      case "networking": return "Computer Networking / IT Support";
+      case "cybersecurity": return "Cybersecurity / Ethical Hacking";
+      case "cloud": return "Cloud Computing (AWS, Azure, GCP)";
+      case "devops": return "DevOps / CI-CD Basics";
+      case "mobiledev": return "Mobile App Development (Android/iOS)";
+      case "robotics": return "Robotics / Automation";
+      case "uiux": return "UI/UX Design";
+      case "excel": return "Microsoft Excel / Google Sheets";
+      case "arts": return "Arts / Drawing / Painting";
+      case "music": return "Music / Instrument Lessons";
+      case "editing": return "Video Editing / Graphic Design";
+      case "communication": return "Communication / Public Speaking";
+      case "mentorship": return "Career Mentorship";
+      case "problemsolving": return "Problem Solving";
+      case "leadership": return "Leadership Skills";
+      case "studyhabits": return "Study Skills / Time Management";
+      case "financialliteracy": return "Financial Literacy / Budgeting";
+      case "entrepreneurship": return "Entrepreneurship / Business Skills";
+      case "digitalmarketing": return "Digital Marketing / Social Media Management";
+      case "softskills": return "Soft Skills / Workplace Readiness";
+      case "interviewprep": return "Job Interview Preparation";
+      case "resume": return "Resume / Portfolio Building";
+      case "matholympiad": return "Math Olympiad / Competitions";
+      case "scienceolympiad": return "Science Olympiad / Competitions";
+      case "speechcontest": return "Speech / Oratory Contest Prep";
+      case "collegeprep": return "College Entrance Prep (UPCAT, ACET, etc.)";
+      default: return "Select Subject";
+    }
+  }
+
   function chooseStudentType(value) {
     updateField("studentType", value);
     setStudentTypeSelect(false);
@@ -745,6 +852,11 @@ function ForTutor({ setApplyPremium }){
   function chooseGender(value){
     updateField("gender", value);
     setGenderSelect(false);
+  }
+
+  function chooseSubject(value){
+    updateField("subjects", value);
+    setSubjectSelect(false);
   }
 
   function updateField(key, value) {
@@ -765,6 +877,11 @@ function ForTutor({ setApplyPremium }){
     genderSelect, 
     chooseGender, 
     setGenderSelect 
+  }
+
+  const subjectProps = {
+    subjectSelect,
+    chooseSubject,
   }
 
   return (
@@ -797,16 +914,20 @@ function ForTutor({ setApplyPremium }){
             )}
           </div>
 
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder=" "
-              value={form.subjects}
-              onChange={(e) => updateField("subjects", e.target.value)}
-              required
-            />
-            <label>Subjects you wanna teach</label>
+          <div className="input-group custom-select-group">
+            <div
+              className="custom-select-display"
+              onClick={() => setSubjectSelect(!subjectSelect)}
+            >
+              {form.subjects
+                ? subjectLabel(form.subjects)
+                : "Select Subject to Teach"}
+
+              <i className={`bi bi-chevron-${subjectSelect ? "up" : "down"}`}></i>
+            </div>
+            <SelectSubject {...subjectProps} />
           </div>
+
 
           <LearningMode {...learningModeProps} />
 
@@ -937,6 +1058,74 @@ function ForTutor({ setApplyPremium }){
         </p>
         <a onClick={() => setApplyPremium(false)}>Apply for Free Account</a>
       </div>
+    </>
+  )
+}
+
+function SelectSubject({ subjectSelect, chooseSubject }){
+  const allSubjects = [
+    // Academic / School Subjects
+    { value: "math", label: "Mathematics" },
+    { value: "english", label: "English" },
+    { value: "filipino", label: "Filipino / Tagalog" },
+    { value: "science", label: "Science" },
+    { value: "aralingpanlipunan", label: "Araling Panlipunan" },
+    { value: "mapeh", label: "MAPEH (Music, Arts, PE, Health)" },
+    { value: "technology", label: "Technology / ICT" },
+
+    // Competitions & Advanced Learning
+    { value: "matholympiad", label: "Math Olympiad / Competitions" },
+    { value: "scienceolympiad", label: "Science Olympiad / Competitions" },
+    { value: "speechcontest", label: "Speech / Oratory Contest Prep" },
+    { value: "collegeprep", label: "College Entrance Prep (UPCAT, ACET, etc.)" },
+
+    // Arts / Creativity
+    { value: "arts", label: "Arts / Drawing / Painting" },
+    { value: "music", label: "Music / Instrument Lessons" },
+    { value: "editing", label: "Video Editing / Graphic Design" },
+    
+    // Career / Life Skills
+    { value: "communication", label: "Communication / Public Speaking" },
+    { value: "mentorship", label: "Career Mentorship" },
+    { value: "problemsolving", label: "Problem Solving" },
+    { value: "leadership", label: "Leadership Skills" },
+    { value: "studyhabits", label: "Study Skills / Time Management" },
+    { value: "financialliteracy", label: "Financial Literacy / Budgeting" },
+    { value: "entrepreneurship", label: "Entrepreneurship / Business Skills" },
+    { value: "digitalmarketing", label: "Digital Marketing / Social Media Management" },
+    { value: "softskills", label: "Soft Skills / Workplace Readiness" },
+    { value: "interviewprep", label: "Job Interview Preparation" },
+    { value: "resume", label: "Resume / Portfolio Building" },
+
+    // IT / Computer Science
+    { value: "webdev", label: "Web Development (HTML, CSS, JS)" },
+    { value: "programming", label: "Programming (Python, Java, C++, etc.)" },
+    { value: "datascience", label: "Data Science / Analytics" },
+    { value: "ai", label: "Artificial Intelligence / Machine Learning" },
+    { value: "database", label: "Databases / SQL" },
+    { value: "networking", label: "Computer Networking / IT Support" },
+    { value: "cybersecurity", label: "Cybersecurity / Ethical Hacking" },
+    { value: "cloud", label: "Cloud Computing (AWS, Azure, GCP)" },
+    { value: "devops", label: "DevOps / CI-CD Basics" },
+    { value: "mobiledev", label: "Mobile App Development (Android/iOS)" },
+    { value: "robotics", label: "Robotics / Automation" },
+    { value: "uiux", label: "UI/UX Design" },
+    { value: "excel", label: "Microsoft Excel / Google Sheets" },
+];
+
+  return (
+    <>
+      {subjectSelect && (
+        <ul className="custom-select-options">
+          {allSubjects.map(c => {
+            return (
+              <li key={c.value} onClick={() => chooseSubject(c.value)}>
+                {c.label}
+              </li>
+            )
+          })}
+        </ul>
+      )}
     </>
   )
 }
