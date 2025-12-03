@@ -14,7 +14,7 @@ $anim-ease: ease-in-out;
 
   .login-box.switch {
     margin: 0 10rem;
-    animation: switchPage00 $anim-duration $anim-ease forwards;
+    animation: switchPage00 $anim-duration $anim-ease forwards; 
   } .login-box.unswitch {
     margin: 0 10rem 0 5rem;
     animation: unSwitchPage00 $anim-duration $anim-ease forwards;

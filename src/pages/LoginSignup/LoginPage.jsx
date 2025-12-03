@@ -9,6 +9,7 @@ export function LoginPage(){
   const [ switched, setSwitched ] = useState(false);
   const [ wasSwitched, setWasSwitched ] = useState(false);
   const [ demoMode, setDemoMode ] = useState(false);
+  const [ toggleSwitch, setToggleSwitch ] = useState(true);
 
   function switchPage(){
     setWasSwitched(switched);
@@ -18,6 +19,11 @@ export function LoginPage(){
   useEffect(() => {
     AOS.refresh();
   }, [switched]);
+
+  const loginProps = {
+    setDemoMode, setSwitched, toggleSwitch,
+    setToggleSwitch, setToggleRegister, setRole
+  }
 
   return (
     <>
@@ -37,10 +43,8 @@ export function LoginPage(){
           : wasSwitched ? 'unswitch' : ''}`
           }>
           {!switched 
-          ? <LoginStudents setDemoMode={setDemoMode} setToggleRegister={setToggleRegister} 
-          setRole={setRole} />
-          : <LoginTutors setDemoMode={setDemoMode} setToggleRegister={setToggleRegister} 
-          setRole={setRole} />
+          ? <LoginStudents {...loginProps} />
+          : <LoginTutors {...loginProps} />
           }
         </div>
       </div>
@@ -87,7 +91,7 @@ function OrangeBox_Tutors(){
   )
 }
 
-function LoginStudents({ setDemoMode, setToggleRegister, setRole }){
+function LoginStudents({ setDemoMode, setSwitched, toggleSwitch, setToggleSwitch, setToggleRegister, setRole }){
   const [value1, setValue1] = useState("");
   const [password, setPassword] = useState("");
   const [ showPassword, setShowPassword ] = useState(false);
@@ -99,6 +103,10 @@ function LoginStudents({ setDemoMode, setToggleRegister, setRole }){
   useEffect(() => {
     setRole("student");
   }, [])
+
+  const switchProps = {
+    setSwitched, toggleSwitch, setToggleSwitch
+  }
 
   return (
     <>
@@ -142,12 +150,14 @@ function LoginStudents({ setDemoMode, setToggleRegister, setRole }){
         </div>
       </div>
 
-      <a data-aos="zoom-in" id='contact-support' href="#">Contact support.</a>
+      <SwitchLogin {...switchProps} />
+
+      <a id='contact-support' href="#">Contact support.</a>
     </>
   )
 }
 
-function LoginTutors({ setDemoMode, setToggleRegister, setRole }){
+function LoginTutors({ setDemoMode, setSwitched, toggleSwitch, setToggleSwitch, setToggleRegister, setRole }){
   const [value1, setValue1] = useState("");
   const [password, setPassword] = useState("");
   const [ showPassword, setShowPassword ] = useState(false);
@@ -159,6 +169,10 @@ function LoginTutors({ setDemoMode, setToggleRegister, setRole }){
   useEffect(() => {
     setRole("tutor");
   }, [])
+
+  const switchProps = {
+    setSwitched, toggleSwitch, setToggleSwitch
+  }
 
   return (
     <>
@@ -202,8 +216,22 @@ function LoginTutors({ setDemoMode, setToggleRegister, setRole }){
         </div>
       </div>
 
-      <a data-aos="zoom-in" id='contact-support' href="#">Contact support.</a>
+      <SwitchLogin {...switchProps} />
+
+      <a id='contact-support' href="#">Contact support.</a>
     </>
+  )
+}
+
+function SwitchLogin({ setSwitched, toggleSwitch, setToggleSwitch }){
+  function handleToggle(){
+    setToggleSwitch(!toggleSwitch);
+    setSwitched(toggleSwitch);
+  }
+  return (
+    <div className="toggle-container" onClick={handleToggle}>
+      <p className="toggle-text">Switch to {toggleSwitch ? "Tutor Mode" : "Student Mode"}</p>
+    </div>
   )
 }
 
