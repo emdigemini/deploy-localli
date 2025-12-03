@@ -420,10 +420,15 @@ function ForStudent({ setApplyPremium }){
 
           <div className="input-group">
             <input
-              type="number"
+              type="text"
               placeholder=" "
-              value={form.allowance}
-              onChange={(e) => updateField("allowance", e.target.value)}
+              value={`${form.allowance ? `₱${form.allowance}` : ''}`}
+              onChange={(e) => {
+                let value = e.target.value;
+                const moneyOnly = value.replace(/\D/g, '');
+                const money = Number(moneyOnly).toLocaleString();
+                updateField("allowance", money);
+              }}
               required
             />
             <label>Monthly allowance</label>
@@ -756,7 +761,7 @@ function ForTutor({ setApplyPremium }){
     gradeLevel: "",
     subjects: "",
     learningMode: "",
-    allowance: "",
+    prefRate: "",
     contact: "",
     guardian: "",
     firstName: "",
@@ -943,10 +948,15 @@ function ForTutor({ setApplyPremium }){
 
           <div className="input-group">
             <input
-              type="number"
+              type="text"
               placeholder=" "
-              value={form.allowance}
-              onChange={(e) => updateField("allowance", e.target.value)}
+              value={`${form.prefRate ? `₱${form.prefRate}` : ''}`}
+              onChange={(e) => {
+                let value = e.target.value;
+                const moneyOnly = value.replace(/\D/g, '');
+                const money = Number(moneyOnly).toLocaleString();
+                updateField("prefRate", money);
+              }}
               required
             />
             <label>Preferred rate</label>
