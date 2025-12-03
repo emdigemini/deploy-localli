@@ -165,7 +165,6 @@ function ForStudent({ setApplyPremium }){
       case "ba-economics": return "BA Economics (BA-ECO)";
       case "bshm": return "BS Hospitality Management (BSHM)";
       case "bsn": return "BS Nursing (BSHN)";
-
       default: return "Select Course";
     }
   }
@@ -435,7 +434,12 @@ function ForStudent({ setApplyPremium }){
               type="tel"
               placeholder=" "
               value={form.contact}
-              onChange={(e) => updateField("contact", e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                const numbersOnly = value.replace(/\D/g, '');
+                const phNumber = numbersOnly.slice(0, 11);
+                updateField("contact", phNumber);
+              }}
               required
             />
             <label>Contact number</label>
@@ -446,7 +450,13 @@ function ForStudent({ setApplyPremium }){
               type="tel"
               placeholder=" "
               value={form.guardian}
-              onChange={(e) => updateField("guardian", e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                const numbersOnly = value.replace(/\D/g, '');
+                const phNumber = numbersOnly.slice(0, 11);
+
+                updateField("guardian", phNumber);
+              }}
             />
             <label>Guardian contact (Optional)</label>
           </div>
@@ -584,7 +594,7 @@ function SelectCourse({ form, courseLabel, courseSelect, chooseCourse, setCourse
         className="custom-select-display"
         onClick={() => setCourseSelect(!courseSelect)}
       >
-        {form.strand
+        {form.course
           ? courseLabel(form.course)
           : "Select Course"}
 
@@ -947,7 +957,12 @@ function ForTutor({ setApplyPremium }){
               type="tel"
               placeholder=" "
               value={form.contact}
-              onChange={(e) => updateField("contact", e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                const numbersOnly = value.replace(/\D/g, '');
+                const phNumber = numbersOnly.slice(0, 11);
+                updateField("contact", phNumber);
+              }}
               required
             />
             <label>Contact number</label>

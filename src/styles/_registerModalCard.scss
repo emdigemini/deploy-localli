@@ -34,7 +34,7 @@ $primary-blue: #007bff;
     &::before {
       content: "";
       position: absolute;
-      background-image: url("image/plane-right.png");
+      background-image: url("../../public/image/plane-right.png");
       background-repeat: no-repeat;
       background-position: calc(100% + 200px) calc(100% + 175px);
       background-size: 400px 300px;
@@ -44,7 +44,7 @@ $primary-blue: #007bff;
     &::after {
       content: "";
       position: absolute;
-      background-image: url("image/plane-left.png");
+      background-image: url("../../public/image/plane-left.png");
       background-repeat: no-repeat;
       background-position: -300px calc(2%);
       background-size: 450px 100px;
@@ -230,7 +230,7 @@ $primary-blue: #007bff;
         cursor: pointer;
 
         &:hover {
-          color: darken($primary-blue, 10%);
+          color: darken(#007bff, 10%);
         }
       }
     }
