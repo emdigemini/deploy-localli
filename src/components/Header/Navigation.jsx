@@ -2,11 +2,8 @@ import { NotificationList } from "./NotificationList"
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { CheckLogin } from "../../context/LoginContext";
-import { LoadingData } from "../../context/LoadingContext";
 
 export function Navigation({ setConfirmLogout }){
-  const { setIsLoading } = useContext(LoadingData);
-
   const [ toggleHome, setToggleHome ] = useState(false);
   const [ toggleCommunity, setToggleCommunity ] = useState(false);
   const [ toggleMessage, setToggleMessage ] = useState(false);
@@ -19,16 +16,12 @@ export function Navigation({ setConfirmLogout }){
   const location = useLocation();
 
   useEffect(() => {
-    // setIsLoading(true);
     const path = location.pathname;
     setToggleHome(path === "/");
     setToggleCommunity(path === "/community");
     setToggleMessage(path === "/messages");
     setToggleProfile(path === "/profile");
-
-    // const setLoading = setTimeout(() => setIsLoading(false), 1500);
-    // return () => clearTimeout(setLoading);
-  }, [location])
+  }, [location]);
 
   const toggleEvent = (e) => {
     const toggleTo = e.currentTarget.id;

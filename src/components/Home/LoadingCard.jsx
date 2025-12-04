@@ -1,4 +1,16 @@
-export function LoadingMainFeed(){
+export function LoadingHomeScreen(){
+  return (
+    <div className="fyp-page">
+      <div className="left-side">
+        <LoadingSideCards />
+        <LoadingMainFeed />
+      </div>
+      <LoadingAsideSection />
+    </div>
+  )
+}
+
+function LoadingMainFeed(){
   return (
     <div className="main-feed">
       <LoadingPostBox />
@@ -7,7 +19,7 @@ export function LoadingMainFeed(){
   )
 }
 
-export function LoadingPostCard({ cards=5 }){
+function LoadingPostCard({ cards=5 }){
   return (
     Array(cards).fill(0).map((_, i) => {
       return (
@@ -52,7 +64,7 @@ export function LoadingPostCard({ cards=5 }){
   )
 }
 
-export function LoadingPostBox(){
+function LoadingPostBox(){
   return (
     <div className="post-box">
       <div className="user-profile skeleton"></div>
@@ -62,7 +74,7 @@ export function LoadingPostBox(){
   )
 }
 
-export function LoadingSideCards(){
+function LoadingSideCards(){
   return (
     <>
     <div className="left-sticky-wrapper">
@@ -110,7 +122,7 @@ export function LoadingSideCards(){
   )
 }
 
-export function LoadingAsideSection(){
+function LoadingAsideSection(){
   return (
     <div className="sidebar">
       <section className="suggestions">
@@ -183,3 +195,5 @@ export function LoadingAsideSection(){
     </div>
   )
 }
+
+export default LoadingHomeScreen;

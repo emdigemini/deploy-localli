@@ -2,27 +2,32 @@ import { SideCards } from '../../components/Header/SideCards'
 import { PostFeed } from '../../components/Home/PostFeed'
 import { AsideSection } from '../../components/Home/AsideSection'
 import { useContext, useEffect } from 'react'
-import { LoadingSideCards, LoadingMainFeed, LoadingAsideSection } from '../../components/Home/LoadingCard'
+import { LoadingHomeScreen } from '../../components/Home/LoadingCard'
 import { LoadingData } from '../../context/LoadingContext'
 
 export function HomePage(){
-  const { isLoaded, setIsLoaded } = useContext(LoadingData);
+  const { isLoading, setIsLoading } = useContext(LoadingData);
 
   useEffect(() => {
-    if(isLoaded) return;
-    const loadItems = setTimeout(() => setIsLoaded(true), 700);
+    if(isLoading) return;
+    const loadItems = setTimeout(() => setIsLoading(true), 700);
     return () => clearTimeout(loadItems);
-  }, [])
+  }, [isLoading]);
+
 
   return (
     <>
-      <div className="fyp-page">
-        <div className="left-side">
-          {!isLoaded ? <LoadingSideCards /> : <SideCards />} 
-          {!isLoaded ? <LoadingMainFeed /> : <PostFeed />} 
-        </div>
-        {!isLoaded ? <LoadingAsideSection /> : <AsideSection />} 
-      </div>
+      {
+      !isLoading 
+      ? <LoadingHomeScreen />
+      : <div className="fyp-page">
+          <div className="left-side">
+            <SideCards /> 
+            <PostFeed /> 
+          </div>
+          <AsideSection /> 
+        </div> 
+      }
     </>
   )
 }
