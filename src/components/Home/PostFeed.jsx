@@ -489,7 +489,9 @@ function LikeButton({ postId }){
   };
 
   return (
-    <i onClick={likePost} className={`bi bi-heart${like ? '-fill liked' : ''}`}></i>
+    <button onClick={likePost}>
+      <i className={`bi bi-heart${like ? '-fill liked' : ''}`}></i>
+    </button>
   )
 }
 
@@ -503,7 +505,9 @@ function CommentButton({ postId, onComment, setOnComment }){
   }
 
   return (
-    <i onClick={toggleComment} className={`bi bi-chat${onComment?.includes(postId) ? '-fill active' : ''}`}></i>
+    <button onClick={toggleComment}>
+      <i className={`bi bi-chat${onComment?.includes(postId) ? '-fill active' : ''}`}></i>
+    </button>
   )
 }
 
@@ -547,7 +551,9 @@ function CommentSection({ postId, onComment }){
 
 function ShareButton(){
   return (
-    <i className="bi bi-share"></i>
+    <button>
+      <i className="bi bi-share"></i>
+    </button>
   )
 }
 
@@ -567,7 +573,8 @@ function BookmarkButton({ postId }){
   }
 
   return (
-    <i onClick={savePost} className={`bi bi-bookmark${bookmark ? '-fill saved' : ''}`}>
-    </i>
+    <button onClick={savePost}>
+      <i className={`bi bi-bookmark${bookmark ? '-fill saved' : ''}`}></i>
+    </button>
   )
 }

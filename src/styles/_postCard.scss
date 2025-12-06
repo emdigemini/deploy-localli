@@ -213,6 +213,12 @@
     background: #fff;
     overflow: hidden;
 
+    button {
+      margin: 10px;
+      border: none;
+      background: none;
+    }
+
     & i {
       position: relative;
       cursor: pointer;

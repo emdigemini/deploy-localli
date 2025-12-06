@@ -191,6 +191,10 @@ header {
         color: var(--subtext-gray);
         cursor: pointer;
 
+        a {
+          color: unset;
+        }
+
         &:hover {
           color: #4993fb;
         }

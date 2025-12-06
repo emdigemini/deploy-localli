@@ -1,6 +1,6 @@
 import { NotificationList } from "./NotificationList"
 import { useState, useRef, useEffect, useContext } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, Link } from "react-router";
 import { CheckLogin } from "../../context/LoginContext";
 
 export function Navigation({ setConfirmLogout }){
@@ -41,26 +41,38 @@ export function Navigation({ setConfirmLogout }){
         <li id="home" ref={home}
           style={toggleHome ? { color: "#4993fb" } : {}}
           onClick={(e) => toggleEvent(e)}
-        ><Home /></li>
+        ><Link>
+          <Home />
+        </Link></li>
         <li id="community"
           onClick={(e) => toggleEvent(e)}
           style={toggleCommunity ? { color: "#4993fb" } : {}}
-        ><Community /></li>
+        ><Link>
+          <Community />
+        </Link></li>
         <li id="message"
           onClick={(e) => toggleEvent(e)}
           style={toggleMessage ? { color: "#4993fb" } : {}}
-        ><Message /></li>
+        ><Link>
+          <Message />
+        </Link></li>
         <li id="notification"
           ref={notifRef}
           onClick={(e) => toggleEvent(e)}
           style={toggleNotif ? { color: "#4993fb" } : {}}
-        ><Notification /></li>
+        ><Link>
+          <Notification />
+        </Link></li>
         <li id="profile" 
           onClick={(e) => toggleEvent(e)}
-        ><Profile toggleProfile={toggleProfile} /></li>
+        ><Link>
+          <Profile toggleProfile={toggleProfile} />
+        </Link></li>
         <li id="logout" 
           onClick={(e) => toggleEvent(e)}
-        ><Logout /></li>
+        ><Link>
+          <Logout />
+        </Link></li>
       </ul>
       {toggleNotif && <NotificationList notifRef={notifRef}
       setToggleNotif={setToggleNotif} />}
