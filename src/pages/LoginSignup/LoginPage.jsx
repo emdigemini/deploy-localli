@@ -181,7 +181,7 @@ function LoginTutors({ setDemoMode, setSwitched, toggleSwitch, setToggleSwitch, 
         data-aos-duration="400"
       >
         <h1>GOT A SKILLS TO TEACH?</h1>
-        <h2>Share your knowledge, connect with learners and get paid.</h2>
+        <h2>Share your knowledge, engage with learners and earn income as a tutor.</h2>
       </div>
 
       <div className="input-box" 

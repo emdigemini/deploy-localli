@@ -115,6 +115,10 @@ function AdjustUserPreferences(){
             </select>
           </div>
         </div>
+        <div className="button-container">
+          <SaveButton />
+          <ClearButton />
+        </div>
       </div>
     </section>
   )
@@ -184,4 +188,20 @@ function Dropdown({ label, options }) {
       </div>
     </div>
   );
+}
+
+function SaveButton(){
+  return (
+    <button>
+      Save
+    </button>
+  )
+}
+
+function ClearButton(){
+  return (
+    <button>
+      Clear
+    </button>
+  )
 }

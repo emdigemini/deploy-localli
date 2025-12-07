@@ -164,6 +164,7 @@
       gap: 20px;
 
       .your-preferences {
+        position: relative;
         display: flex;
         justify-content: flex-start;
         gap: 2rem;
@@ -171,6 +172,32 @@
         width: max-content;
         padding: 20px;
         border-radius: 12px;
+
+        .button-container {
+          position: absolute;
+          bottom: 10px;
+          display: flex;
+          gap: 20px;
+
+          button {
+            padding: 10px 0;
+            width: 115px;
+            font-size: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+
+            &:nth-child(1) {
+              background: var(--primary-blue);
+              color: #fff;
+            } &:nth-child(2) {
+              background: var(--primary-orange);
+              color: #fff;
+            } &:hover {
+              opacity: 0.9;
+            }
+          }
+        }
       }
 
       .input-group-1 {
@@ -183,7 +210,7 @@
       .input-group-2 {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
 
         .input-box:nth-child(2) {
           display: flex;
@@ -192,8 +219,23 @@
 
           .radio-group {
             display: flex;
-            gap: 6px;
+            gap: 20px;
+            font-size: 14px;
             flex-wrap: wrap;
+
+            .radio-box {
+              display: flex;
+              align-items: center;
+              gap: 4px;
+
+              input {
+                transform: scale(1.2);
+                cursor: pointer;
+              }
+              label {
+                cursor: pointer;
+              }
+            }
           }
         }
       }
@@ -214,7 +256,8 @@
         }
 
         & select {
-          padding: 12px 16px;
+          padding: 10px 14px;
+          margin-top: 10px;
           border-radius: 8px;
           border: 1px solid transparent;
           transition: .3s ease;
