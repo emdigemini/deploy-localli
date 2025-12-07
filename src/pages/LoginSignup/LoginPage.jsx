@@ -67,7 +67,7 @@ function OrangeBox_Students(){
       <div className="orange-box_img"
         data-aos="zoom-in-up"
       >
-        <img className="find-tutor" src="image/6611984.webp" draggable="false" />
+        <img className="find-tutor" src="/image/6611984.webp" draggable="false" />
       </div>
     </>
   )
@@ -85,7 +85,7 @@ function OrangeBox_Tutors(){
       <div className="orange-box_img"
         data-aos="zoom-in-up"
       >
-        <img src="image/4600945.webp" draggable="false" />
+        <img src="/image/4600945.webp" draggable="false" />
       </div>
     </>
   )

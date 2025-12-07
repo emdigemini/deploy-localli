@@ -340,7 +340,7 @@ function MediaSlider({ post, media }){
       if(i === 0) return i;
       return i - 1;
     })
-  }, [media]);
+  }, []);
 
   if (!media || media.length === 0) return null;
 
@@ -512,7 +512,7 @@ function CommentButton({ postId, onComment, setOnComment }){
 }
 
 function CommentSection({ postId, onComment }){
-  const [ commentText, setCommentText ] = useState("");  
+  const [ setCommentText ] = useState("");  
   const commentRef = useRef(null);
 
   useEffect(() => {
