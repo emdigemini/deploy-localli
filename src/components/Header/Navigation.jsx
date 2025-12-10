@@ -2,6 +2,7 @@ import { NotificationList } from "./NotificationList"
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation, Link } from "react-router";
 import { CheckLogin } from "../../context/LoginContext";
+import { LoadingData } from "../../context/LoadingContext";
 
 export function Navigation({ setConfirmLogout }){
   const [ toggleHome, setToggleHome ] = useState(false);
@@ -81,6 +82,7 @@ export function Navigation({ setConfirmLogout }){
 }
 
 export function LogoutConfirmation({ setConfirmLogout }){
+    const { setIsLoading } = useContext(LoadingData);
   const { setIsLogin } = useContext(CheckLogin);
   const navigate = useNavigate();
   const logoutConfirm = useRef(null);
@@ -93,6 +95,7 @@ export function LogoutConfirmation({ setConfirmLogout }){
 
   function logout(){
     setIsLogin(false); 
+    setIsLoading(false);
     navigate("/");
   }
 

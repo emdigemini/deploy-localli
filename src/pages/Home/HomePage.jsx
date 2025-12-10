@@ -12,7 +12,7 @@ export function HomePage(){
     if(isLoading) return;
     const loadItems = setTimeout(() => setIsLoading(true), 700);
     return () => clearTimeout(loadItems);
-  }, [isLoading]        );
+  }, [isLoading]);
 
 
   return (
