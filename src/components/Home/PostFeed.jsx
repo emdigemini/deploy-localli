@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { CreatePost, PostRender, SelectedMedia } from "../../context/PostContext";
+import { CreatePost, SelectedMedia } from "../../context/PostContext";
 import { LoadingData } from "../../context/LoadingContext";
 
 import DOMPurify from "dompurify";
@@ -20,8 +20,7 @@ export function PostFeed(){
 
 export function CreatePostUtility(){
   const { prevMedia, setPrevMedia } = useContext(SelectedMedia);
-  const { toggleCreatePost } = useContext(CreatePost);
-  const { addPost } = useContext(PostRender);
+  const { toggleCreatePost, addPost } = useContext(CreatePost);
 
   const [ postText, setPostText ] = useState("");
   const [ mediaPreview, setMediaPreview ] = useState([]);
@@ -141,7 +140,7 @@ export function CreatePostUtility(){
 }
 
 export function PostCard(){
-  const { posts } = useContext(PostRender);
+  const { posts } = useContext(CreatePost);
   const [ onComment, setOnComment ] = useState([]);
   const [ renderMedia, setRenderMedia ] = useState([]);
 
@@ -474,7 +473,7 @@ function TagUser(){
 
 /** INTERACTIONS */
 function LikeButton({ postId }){
-  const { posts, setPost } = useContext(PostRender);
+  const { posts, setPost } = useContext(CreatePost);
   const [ like, setLike ] = useState(false);
 
   const likePost = () => {
@@ -512,7 +511,7 @@ function CommentButton({ postId, onComment, setOnComment }){
 }
 
 function CommentSection({ postId, onComment }){
-  const [ setCommentText ] = useState("");  
+  const [ commentText, setCommentText ] = useState("");  
   const commentRef = useRef(null);
 
   useEffect(() => {
@@ -558,7 +557,7 @@ function ShareButton(){
 }
 
 function BookmarkButton({ postId }){
-  const { posts, setPost } = useContext(PostRender);
+  const { posts, setPost } = useContext(CreatePost);
   const [ bookmark, setSave ] = useState(false);
 
   const savePost = () => {

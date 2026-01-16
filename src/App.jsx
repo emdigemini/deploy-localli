@@ -10,7 +10,7 @@ import { CommunityPage } from './pages/Community/CommunityPage'
 import { MessagePage } from './pages/Message/MessagePage'
 import { ProfilePage } from './pages/Profile/ProfilePage'
 import { LoadingProvider } from './context/LoadingContext'
-import { CreatePostProvider, PostProvider, PrevMediaProvider } from './context/PostContext'
+import { PostProvider, PrevMediaProvider } from './context/PostContext'
 import { ScrollManager } from './utils/ScrollManager'
 import { CheckLogin } from './context/LoginContext'
 
@@ -28,23 +28,21 @@ function App() {
     <>
       <ScrollManager /> 
       <LoadingProvider>
-        <CreatePostProvider>
-          <PostProvider>
-            <PrevMediaProvider>
-              <Routes>
-                {!isLogin 
-                ? <Route path='/' element={<LoginPage />} />
-                : <Route path='/*' element={<Header />}>
-                    <Route path='' element={<HomePage />} />
-                    <Route path='community' element={<CommunityPage />} />
-                    <Route path="messages" element={<MessagePage />} />
-                    <Route path="profile" element={<ProfilePage />} />
-                  </Route>
-                }
-              </Routes>
-            </PrevMediaProvider>
-          </PostProvider>
-        </CreatePostProvider>
+        <PostProvider>
+          <PrevMediaProvider>
+            <Routes>
+              {!isLogin 
+              ? <Route path='/' element={<LoginPage />} />
+              : <Route path='/*' element={<Header />}>
+                  <Route path='' element={<HomePage />} />
+                  <Route path='community' element={<CommunityPage />} />
+                  <Route path="messages" element={<MessagePage />} />
+                  <Route path="profile" element={<ProfilePage />} />
+                </Route>
+              }
+            </Routes>
+          </PrevMediaProvider>
+        </PostProvider>
       </LoadingProvider>
     </>
   )
